@@ -269,14 +269,14 @@ pub fn tree_add_bet_action(
     amount: i32,
     is_raise: bool,
 ) -> Result<(), String> {
-    let mut tree = tree_state.lock().map_err(|_|  "Falha ao acessar o estado da árvore de ações".to_string())?;
+    let mut tree = tree_state.lock().map_err(|_|  return)?;
 
     let action = match is_raise {
         false => Action::Bet(amount),
         true => Action::Raise(amount),
     };
 
-    tree.add_action(action).map_err(|_| "Falha ao adicionar a ação à árvore".to_string())?;
+    tree.add_action(action).map_err(|_| return)?;
     Ok(())
 }
 
